@@ -89,14 +89,23 @@ public class VersionMojo
     @Parameter( required = true, defaultValue = "rpm.release" )
     private String releaseProperty;
 
+    @Parameter
+    private boolean dist;
+    
     /**
      * {@inheritDoc}
      */
     public void execute()
         throws MojoExecutionException, MojoFailureException
     {
-        VersionHelper.Version version = new VersionHelper( this ).calculateVersion();
+    	VersionHelper helper = new VersionHelper( this );
+        VersionHelper.Version version = helper.calculateVersion();
 
+        if ( dist )
+        {
+        	version.release = version.release.concat(helper.evaluateMacro("{?dist}"));
+        }
+        
         setProperty( versionProperty, version.version );
         setProperty( releaseProperty, version.release );
     }

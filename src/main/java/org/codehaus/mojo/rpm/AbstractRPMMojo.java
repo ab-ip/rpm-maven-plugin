@@ -101,6 +101,8 @@ public abstract class AbstractRPMMojo
     @Parameter( alias = "rpmbuildStage", property = "rpm.rpmbuild.stage", defaultValue = "-bb")
     private String rpmbuildStage;
 
+    @Parameter
+    private boolean dist;
 
     /**
      * The target architecture for the rpm. The default value is <i>noarch</i>.
@@ -951,12 +953,17 @@ public abstract class AbstractRPMMojo
 		}
 	}
 
-        // calculate versions if neccessary, check for existing maven modifier and split them accordingly
+        // calculate versions if necessary, check for existing maven modifier and split them accordingly
         if ( this.projversion == null || this.release == null || this.projversion.contains( "-" ) )
         { // including -SNAPSHOT and 1-34
             final VersionHelper.Version version = new VersionHelper( this ).calculateVersion();
             this.projversion = version.version;
             this.release = version.release;
+        }
+
+        if ( dist )
+        {
+        	this.release = this.release.concat(helper.evaluateMacro("{?dist}"));
         }
 
         log.debug( "project version = " + this.projversion );
