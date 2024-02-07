@@ -16,7 +16,7 @@
   </parent>
 
   <artifactId>rpm-maven-plugin</artifactId>
-  <version>2.3.1-SNAPSHOT</version>
+  <version>2.3.0-IP</version>
   <packaging>maven-plugin</packaging>
 
   <name>RPM Maven Plugin</name>
@@ -38,6 +38,19 @@
     <url>https://travis-ci.org/mojohaus/rpm-maven-plugin</url>
   </ciManagement>
 
+  <distributionManagement>
+		<repository>
+			<id>internal-repo</id>
+			<name>IPification Release Repository</name>
+			<url>https://artifacts.ipification.com/libs-release-local/</url>
+		</repository>
+		<snapshotRepository>
+			<id>internal-repo</id>
+			<name>IPification Snapshot Repository</name>
+			<url>https://artifacts.ipification.com/libs-snapshot-local/</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
