@@ -959,12 +959,12 @@ public abstract class AbstractRPMMojo
             final VersionHelper.Version version = new VersionHelper( this ).calculateVersion();
             this.projversion = version.version;
             this.release = version.release;
+            if ( dist )
+            {
+            	this.release = this.release.concat(helper.evaluateMacro("{?dist}"));
+            }
         }
 
-        if ( dist )
-        {
-        	this.release = this.release.concat(helper.evaluateMacro("{?dist}"));
-        }
 
         log.debug( "project version = " + this.projversion );
         log.debug( "project release = " + this.release );
